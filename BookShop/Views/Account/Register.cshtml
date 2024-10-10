@@ -1,0 +1,29 @@
+﻿@model RegisterDto
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="LoginContainer">
+    <form asp-action="Register" method="post" class="register-form">
+
+        <h2>ثبت نام</h2>
+        <div class="input-group">
+            <label asp-for="Email">ایمیل</label>
+            <input asp-for="Email" id="email" name="email" required>
+        </div>
+
+        <div class="input-group">
+            <label asp-for="Password">رمز عبور</label>
+            <input asp-for="Password" id="password" name="password" required>
+        </div> 
+
+        <div class="input-group">
+            <label asp-for="ConfirmPassword">تکرار رمز عبور</label>
+            <input asp-for="ConfirmPassword" id="ConfirmPassword" type="password" name="ConfirmPassword" required>
+        </div>
+
+        <button type="submit" style="font-family: Bykan; font-size: 18px;">ثبت نام</button>
+        <p>آیا اکانت داری? <a asp-action="Login">ورود</a></p>
+    </form>
+</div>
+

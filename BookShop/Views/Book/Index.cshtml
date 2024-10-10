@@ -1,0 +1,108 @@
+﻿@using DataAccess.Models
+@model Book
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="myHeader">
+    <div class="headerItems">
+        <img class="headImg" src="/api/File/GetFile?filename=@Model.Img" alt="@Model.Title">
+    </div>
+
+    <input type="hidden" id="bookId" value="@Model.Id" />
+    <div class="headerItems">
+        <h1>
+            @Model.Title
+        </h1>
+        <p>
+            @Model.Description
+        </p>
+        <p>
+            @Model.Autor.Name
+        </p>
+
+        <div class="bookPrice">
+            <input id="bookIntPrice" type="hidden" value="15000">
+            <strong id="bookShowPrice"> @Model.Price تومان </strong>
+            <div>
+                تعداد :  <input id="countInput" type="number" min="1" value="1">
+
+            </div>
+        </div>
+
+
+        @if (Model.IsAvail)
+        {
+
+            <a onclick="AddToBasket()" class="cartBtn atext" style="margin-top: 15px;">
+                افزودن به سبد
+            </a>
+        }
+        else
+        {
+            <a class="cartBtn atext" style="margin-top: 15px;">
+                اتمام موجودی
+            </a>
+        }
+
+    </div>
+
+
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        function AddToBasket() {
+            var bookId = document.getElementById("bookId").value;
+            var qty = document.getElementById("countInput").value;
+
+            var data = {
+                bookId: bookId,
+                qty: qty
+            };
+
+            try {
+
+                fetch('/Order/AddToBasket', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        if (data.res == false) {
+                            Swal.fire({
+                                title: "ثبت نام",
+                                text: "شما باید در سایت لاگین کنید",
+                                icon: "question"
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Your work has been saved",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    })
+                   
+
+            } catch {
+
+            }
+        }
+
+
+    </script>
+}
+
+

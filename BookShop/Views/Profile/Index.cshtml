@@ -1,0 +1,60 @@
+﻿
+@using Core.Extenstion
+@using DataAccess.Models
+@model List<Basket>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="container">
+    <h2>سفارشات من</h2>
+    @foreach (var item in Model)
+    {
+        <div class="order">
+            <div class="order-header">
+                <div>
+                    <span class="order-id">Order @item.Id</span>
+                    @if (item.Status == DataAccess.Enums.Status.Accepted)
+                    {
+                        <span class="status" style="color:green">ارسال شده</span>
+                    }
+                    else if (item.Status == DataAccess.Enums.Status.Rejected)
+                    {
+
+                        <span class="status" style="color:red">ارسال نشده</span>
+                    }
+                    else if (item.Status == DataAccess.Enums.Status.Final)
+                    {
+
+                        <span class="status" style="color:darkblue">در انتظار تایید</span>
+                    }
+
+
+                </div>
+                <div>
+                    <span class="order-date">@item.Payed.ToPersianDateString()</span>
+                </div>
+            </div>
+            <div class="order-details">
+                <div>آدرس: @item.Address</div>
+                <div>شماره موبایل:@item.Mobile</div>
+            </div>
+            <div class="order-items">
+                @foreach(var book in item.BasketItems )
+                {
+                    <div class="item">@book.Book.Title - (@book.Qty*@book.Price)</div>
+                }
+             
+             
+            </div>
+            <div class="total">قیمت نهایی:@item.BasketItems.Select(a =>a.Price*a.Qty).Sum().ToString("#,##0") تومان</div>
+        </div>
+
+    }
+  
+
+</div>
+
+

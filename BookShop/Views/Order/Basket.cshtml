@@ -1,0 +1,116 @@
+﻿@using DataAccess.Models
+@model List<BasketItems>
+@{
+    ViewData["Title"] = "Basket";
+}
+
+<div class="container">
+    <h2>سبد خرید</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>عنوان</th>
+                <th>تعداد</th>
+                <th>قیمت</th>
+                <th>   </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr id="basket_@item.Id">
+                    <td>
+                        <div class="ImgAndName">
+                            <img src="/api/File/GetFile?filename=@item.Book.Img" alt="Product 1" class="product-img">
+                            <p>@item.Book.Title  </p>
+                        </div>
+
+                    </td>
+                    <td>@item.Qty</td>
+                    <td class="subtotal">@item.Price</td> 
+                    <td ><i onclick="Remove(@item.Id)" style="color:red; cursor:pointer" class="fa fa-trash"  ></i></td> 
+                    
+                </tr>
+
+
+
+            }
+
+        </tbody>
+     
+     
+    </table>
+</div>
+<form asp-action="Pay" method="post">
+    
+<div class="container">
+    <div class="user-info">
+        <h3>اطلاعات کاربر</h3>
+        <textarea name="address" rows="5" type="text" placeholder="Address"></textarea>
+        <input  name="mobile" type="text" placeholder="Phone Number">
+    </div>
+    <div class="total">
+        قیمت کل: $25,000
+    </div>
+    <button type="submit" style="margin-top: 10px;" class="cartBtn">پرداخت</button>
+</div>
+</form >
+@section Scripts{
+    <script>
+
+        function Remove(id) 
+        {
+            var data = {
+               
+                Id:id
+
+            };
+
+            try {
+
+                fetch('/Order/RemoveBasket', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const row = document.getElementById("basket_" + id)
+                        row.style.display = "none";
+                    })
+
+
+            } catch {
+
+            }
+        }
+        
+        
+        
+        
+  
+
+
+
+
+    </script>
+
+
+
+
+
+
+}
+    
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,114 @@
+﻿@using DataAccess.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> _signInManager;
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookShop</title>
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+
+    <div dir="rtl" style="font-family: Bykan;">
+
+        <!-- nav bar     -->
+        <nav class="nav">
+
+
+            <div class="mobileNav hidden">
+                <i id="myNavBtn" class="fa fa-bars"></i>
+                <a> LOGO </a>
+
+            </div>
+
+            <div id="desktopNav" class="navbar">
+                <a asp-controller="Home" asp-action="index" class="atext"> خانه </a>
+                <a class="atext" asp-controller="Book" asp-action="BookList"> محصولات </a>
+                <a asp-controller="Home" asp-action="aboutUs" class="atext"> درباره با ما </a>
+                @if (_signInManager.IsSignedIn(User))
+                {
+                    <a class="atext" asp-controller="Profile" asp-action="Index"> پروفایل</a>
+                    <a class="atext" asp-controller="Account" asp-action="Logout"> خروج</a>
+
+                }
+                else
+                {
+                    <a class="atext" asp-controller="Account" asp-action="Login"> ثبت نام/ورود</a>
+
+                }
+                <a asp-controller="Order" asp-action="Basket" class="atext"> سبد خرید </a>
+
+                <a> LOGO </a>
+            </div>
+
+
+
+        </nav>
+
+
+
+
+        @RenderBody()
+
+
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="modal-body">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- The Modal -->
+        <!-- footer -->
+        <footer>
+            <div class="about-us">
+                <h3>درباره ما</h3>
+                <p>ما یک شرکت متعهد به ارائه خدمات با کیفیت بالا به مشتریان خود هستیم.</p>
+            </div>
+            <div class="important-links">
+                <h3>لینک‌های مهم</h3>
+                <ul>
+                    <li><a href="#">خانه</a></li>
+                    <li><a href="#">محصولات</a></li>
+                    <li><a href="#">خدمات</a></li>
+                    <li><a href="#">تماس</a></li>
+                </ul>
+            </div>
+            <div class="social-icons">
+                <h3>ما را دنبال کنید</h3>
+                <div class="icons">
+                    <a href="#"><img src="~/asstes/img/8726504_telegram_icon.svg" alt="telegram"></a>
+                    <a href="#"><img src="~/asstes/img/1298747_instagram_brand_logo_social media_icon.svg" alt="Twitter"></a>
+                    <a href="#"><img src="~/asstes/img/294709_circle_twitter_icon.svg " alt="Instagram"></a>
+                </div>
+            </div>
+        </footer>
+
+
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        // Get the modal
+
+    </script>
+</body>
+</html>
+
+
+
+

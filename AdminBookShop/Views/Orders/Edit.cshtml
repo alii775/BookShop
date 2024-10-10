@@ -1,0 +1,113 @@
+﻿@using Core.OrderService
+@model AdminOrderDto
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+           کاربر
+        </dt>
+        <dd class="col-sm-10">
+           @Model.UserName
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            آدرس
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Address
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            موبایل
+        </dt>
+        <dd class="col-sm-10">
+          @Model.Mobile
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+          محصولات
+        </dt>
+        <dd class="col-sm-10">
+          @String.Join(",",Model.Items)
+        </dd>
+    </dl>
+
+
+    <input type="hidden" value="@Model.Id" id="myId" />
+    <button onclick="State(true)" class="btn btn-success">تایید</button>
+    <button onclick="State(false)" class="btn btn-danger">رد </button>
+    <a asp-action="Index">Back to List</a>
+
+   
+</div>
+
+
+
+@section Scripts {
+    <script>
+        function State(state) {
+            const id = document.getElementById("myId").value
+            var data = {
+                Id: id,
+                State: state
+            };
+
+            try {
+
+                fetch('/Orders/SetStatusCommand', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+
+                        if (state) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Order is Accepted",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "error",
+                                title: "Order is Rejected",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+
+
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+
+            } catch {
+
+            }
+
+        }
+    </script>
+}
+
+
+
+
+}

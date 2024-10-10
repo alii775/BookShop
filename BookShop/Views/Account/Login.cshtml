@@ -1,0 +1,30 @@
+﻿
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 style=" text-align:center">ورود</h1>
+<div class="LoginContainer">
+    <form asp-action="login" method="post" class="register-form">
+
+        <h2>ورود</h2>
+        <div class="input-group">
+            <label asp-for="Email">ایمیل</label>
+            <input asp-for="Email" id="email" name="email" required>
+        </div>
+
+        <div class="input-group">
+            <label asp-for="Password">رمز عبور</label>
+            <input asp-for="Password" id="password" name="password" required>
+      
+            <label asp-for="RememberMe">  مرا به خاطر بسپار </label>
+                <input asp-for="RememberMe" />
+         
+         </div>
+
+            <button type="submit" style="font-family: Bykan; font-size: 18px;">ورود</button>
+        <p>آیا اکانت نداری? <a asp-action="Register">ثبت نام</a></p>
+    </form>
+
+

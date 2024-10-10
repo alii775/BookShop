@@ -1,0 +1,36 @@
+﻿@using DataAccess.Models
+@model List<Book>
+
+<div class="BooksContainer">
+    @foreach (var item in Model)
+    {
+        <div class="bookItem">
+            <div class="bookDetails">
+                <img src="api/File/GetFile?fileName=@item.Img" class="imgBook">
+                <div>
+                    <h3>
+                        @item.Title
+                    </h3>
+                    <div style="display: flex ; justify-content:space-between ; align-items:center">
+                        <p>
+                            @item.Autor.Name
+                          
+                        </p>
+                        <a style=" cursor:pointer" onclick="OpenModal(@item.Id)" id="mybtn">  <i class="fa fa-search"></i> </a>
+
+
+                    </div>
+                  
+                    <p> @item.Price تومان </p>
+
+                </div>
+            </div>
+
+            <a asp-action="Index" asp-controller="Book" asp-route-id="@item.Id" style="text-decoration : none" class="cartBtn">
+                مشاهده
+            </a>
+        </div>
+
+    }
+</div>
+

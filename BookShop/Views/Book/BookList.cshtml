@@ -1,0 +1,77 @@
+﻿@using Core.BookService
+@model PagedBookDto
+
+
+@{
+    ViewData["Title"] = "BookList";
+}
+
+<!-- books -->
+
+<div style="display: flex; justify-content: center; margin-top: 15px;">
+    <h1> تمام کتاب ها </h1>
+</div>
+
+<div >
+    <form class="search-container" asp-action="BookList" asp-route-page="@Model.Page">
+        <input value="@ViewBag.search" name="search" type="text" id="search-input" placeholder="جستجو...">
+        <button id="search-btn" type="submit">  <i class="fa fa-search"></i> </button>
+    </form>
+
+</div>
+
+<div class="BooksContainer">
+
+
+    @foreach (var item in Model.Items)
+    {
+            <div class="bookItem">
+                <div class="bookDetails">
+                    <img src="/api/File/GetFile?filename=@item.ImgName" class="imgBook">
+                    <div>
+                        <h3>
+                        @item.Title
+                        </h3>
+                        <p>
+                        @item.AutorName
+                        </p>
+                        <p> @item.Price تومان </p>
+
+                    </div>
+                </div>
+
+                <a asp-action="Index" asp-controller="Book" asp-route-id="@item.Id" style="text-decoration : none" class="cartBtn">
+                    مشاهده
+                </a>
+            </div>
+    }
+
+
+
+
+
+
+</div>
+
+
+<div style="display: flex; justify-content: center; margin-top: 15px; margin-bottom: 30px;">
+    <div class="pagination">
+
+
+        @for (int i = 1; i <= Model.TotalPage; i++)
+        {
+            if (i == Model.Page)
+            {
+                        <a class="active" asp-route-search="@ViewBag.search" asp-action="BookList" asp-route-page="@i">@i</a>
+            }
+            else
+            {
+                        <a asp-action="BookList" asp-route-search="@ViewBag.search" asp-route-page="@i">@i</a>
+
+            }
+
+        }
+
+    </div>
+</div>
+

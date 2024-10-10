@@ -1,0 +1,81 @@
+﻿
+<header class="myHeader">
+    <div class="headerItems">
+        <h1>
+           اولین کتاب فروشی حاج علی
+        </h1>
+       <p>
+           خوش آمدید به دنیای کتاب‌ها!
+
+به کتاب‌فروشی آنلاین ما خوش آمدید، جایی که هر صفحه، داستانی جدید برای گفتن دارد و هر کتاب پنجره‌ای به دنیایی متفاوت باز می‌کند. با افتخار از مجموعه‌ای چشمگیر از کتاب‌های داستانی و غیرداستانی، علمی و تخیلی، هنری و آموزشی استقبال می‌کنیم. از تازه‌های نشر گرفته تا آثار کلاسیک جاودانه، همه و همه در انتظار شما هستند.
+
+ویژگی‌های ما:
+
+کیفیت و اصالت: تمامی کتاب‌ها با ضمانت اصالت و کیفیت عرضه می‌شوند تا خیالتان از هر جهت آسوده باشد.
+تنوع بی‌نظیر: صرف نظر از علاقه‌مندی‌تان، کتاب‌های متعددی در دسته‌بندی‌های مختلف برای شما داریم؛ از رمان‌های عاشقانه و جنایی گرفته تا کتاب‌های علمی و تاریخی.
+تجربه‌ای راحت و امن: فرایند خرید آنلاین با رابط کاربری ساده و امکانات پرداخت امن، خرید را برای شما آسان و لذت‌بخش می‌کند.
+       </p>
+    </div>
+
+
+    <div class="headerItems">
+        <img class="headImg"  src="~/asstes//img/OIP.jpg" width="500px" height="450px" alt="diaycode header"/> >
+    </div>
+</header>
+
+<!-- books -->
+@await Component.InvokeAsync("HomeBook", new { ShowHome = true, IsNew = false });
+
+
+<h2 style="text-align:center">کتاب های جدید</h2>
+@await Component.InvokeAsync("HomeBook", new { ShowHome = true, IsNew = true });
+@section Scripts
+{
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+       async function OpenModal(id) {
+            
+            modal.style.display = "block";
+            var body= document.getElementById("modal-body")
+            try {
+                var response = await fetch("/Book/GetBook/"+id);
+                if (response.ok) 
+                {
+                    var res = await response.text();
+                    body.innerHTML = res;
+                
+                
+                }
+            }
+            catch {
+
+            }
+
+
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+       
+       
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+}
